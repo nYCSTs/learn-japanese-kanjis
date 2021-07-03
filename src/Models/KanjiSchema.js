@@ -1,22 +1,43 @@
 const mongoose = require('mongoose');
 
 const kanjiSchema = new mongoose.Schema({
+    // Kanji propriamente dito
     kanji: {
         type: String,
         require: true,
         unique: true
     },
-    onyomiReading: [{
-        type: String,
-        require: true
-    }],
-    kunyomiReading: [{
+    // Significado do kanji
+    kanjiMeaning: [{
         type: String,
         require: true,
     }],
-    meaning: [{
+    // Radicais que compõem o kanji
+    radicals: [{
+        shape: {
+            type: String,
+            require: true,
+        },
+        meaning: {
+            type: String,
+            require: true
+        },
+    }],
+    // Leituras onyomi
+    onyomi: [{
         type: String,
         require: true
+    }],
+    // Leituras kunyomi
+    kunyomi: [{
+        reading: {
+            type: String,
+            require: true,
+        },
+        meaning: [{
+            type: String,
+            require: true,
+        }],
     }],
 });
 

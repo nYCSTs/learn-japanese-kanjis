@@ -1,5 +1,5 @@
 const Kanjis = require('../Models/KanjiSchema');
-const { shuffleKanjiList, generateListWords } = require ('../Utilities/usefulFunctions');
+const { shuffleKanjiList } = require ('../Utilities/usefulFunctions');
 
 const getKanjiList = async (req, res) => {
     return res.json(shuffleKanjiList(await Kanjis.find()));
@@ -7,21 +7,25 @@ const getKanjiList = async (req, res) => {
 
 const addKanji = async (req, res) => {
     const {
-        kanji, onyomiReading, kunyomiReading, meaning
+        kanji, // String
+        kanjiMeaning, // Array de strings
+        radicals, // Array de objetos
+        onyomi, // Array de strings
+        kunyomi, // Array de objetos
     } = req.body;
 
-    if (!kanji || !meaning) {
+    if (!kanji || !kanjiMeaning.length || !radicals.length) {
         return res.json({ "err": "invalid values" });
     }
 
     try {
         const newKanji = await Kanjis.create({
-            kanji,
-            onyomiReading: generateListWords(onyomiReading),
-            kunyomiReading: generateListWords(kunyomiReading),
-            meaning: generateListWords(meaning),
+            kanji, // String
+            kanjiMeaning: kanjiMeaning, // Array de String
+            radicals, // Array de objetos
+            onyomi: onyomi, // Array de strings
+            kunyomi, // Array de objetos
         });
-        console.log("OK: " + newKanji);
         return res.json(newKanji);
     } catch (err) {
         if (err.code === 11000) {
