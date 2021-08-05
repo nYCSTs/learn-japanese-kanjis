@@ -17,6 +17,9 @@ const registerRadical = async (req, res) => {
         });
         return res.json(newRadical);
     } catch (err) {
+        if (err.code === 11000) {
+            return res.json({ 'err': 'duplicated' });
+        } 
         return res.json(err);
     }
 }
