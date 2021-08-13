@@ -24,6 +24,27 @@ const registerRadical = async (req, res) => {
     }
 }
 
+const updateRadical = async (req, res) => {
+    const { id } = req.params;
+    const {
+        shape, meaning, strokeCount
+    } = req.body;
+
+    try {
+        const updatedRadical = await Radicals.findOneAndUpdate({ _id: id }, {
+            shape,
+            meaning,
+            strokeCount
+        }, { new: true });
+        return res.json(updatedRadical);
+    } catch (err) {
+        if (err.code === 11000) {
+            return res.json({ 'err': 'duplicated' });
+        }
+        return res.json(err);
+    }
+}
+
 const deleteRadical = async (req, res) => {
     const { id } = req.params;
 
@@ -32,5 +53,5 @@ const deleteRadical = async (req, res) => {
 }
 
 module.exports = {
-    getRadicalsList, registerRadical, deleteRadical,
+    getRadicalsList, registerRadical, updateRadical, deleteRadical,
 };

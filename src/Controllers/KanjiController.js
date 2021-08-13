@@ -1,9 +1,13 @@
 const Kanjis = require('../Models/KanjiSchema');
 const { shuffleKanjiList } = require ('../Utilities/usefulFunctions');
 
-const getKanjiList = async (req, res) => {
+const getShuffledKanjiList = async (req, res) => {
     return res.json(shuffleKanjiList(await Kanjis.find()));
 };
+
+const getKanjiList = async (req, res) => {
+    return res.json(await Kanjis.find());
+}
 
 const addKanji = async (req, res) => {
     const {
@@ -70,5 +74,5 @@ const deleteKanji = async (req, res) => {
 }
 
 module.exports = {
-    getKanjiList, addKanji, updateKanji, deleteKanji
+    getKanjiList, getShuffledKanjiList, addKanji, updateKanji, deleteKanji
 };
