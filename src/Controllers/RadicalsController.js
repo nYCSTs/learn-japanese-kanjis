@@ -4,6 +4,11 @@ const getRadicalsList = async (req, res) => {
     return res.json(await Radicals.find({}).sort({"strokeCount": 1}));
 }
 
+const getRadicalByID = async (req, res) => {
+    const { id } = req.params;
+    return res.json(await Radicals.findOne({ _id: id }));
+}
+
 const registerRadical = async (req, res) => {
     const {
         shape, meaning, strokeCount,
@@ -53,5 +58,5 @@ const deleteRadical = async (req, res) => {
 }
 
 module.exports = {
-    getRadicalsList, registerRadical, updateRadical, deleteRadical,
+    getRadicalsList, getRadicalByID, registerRadical, updateRadical, deleteRadical,
 };

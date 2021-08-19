@@ -10,6 +10,7 @@ routes.put('/kanji/update/:id', KanjiController.updateKanji);
 routes.delete('/kanji/delete/:id', KanjiController.deleteKanji);
 
 routes.get('/radicals/', RadicalsController.getRadicalsList);
+routes.get('/radical/:id', RadicalsController.getRadicalByID);
 routes.post('/radicals/add', RadicalsController.registerRadical);
 routes.put('/radicals/update/:id', RadicalsController.updateRadical);
 routes.delete('/radicals/delete/:id', RadicalsController.deleteRadical);
