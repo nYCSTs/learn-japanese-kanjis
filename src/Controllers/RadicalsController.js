@@ -6,8 +6,25 @@ const getRadicalsList = async (req, res) => {
 
 const getRadicalByID = async (req, res) => {
     const { id } = req.params;
-    return res.json(await Radicals.findOne({ _id: id }));
-}
+    try {
+        return res.json(await Radicals.findOne({ _id: id }));
+    } catch (err) {
+        return err;
+    }
+};
+
+const getRadicalByIDs = async (req, res) => {
+    const {
+        radicalsList 
+    } = req.body;
+
+    try {
+        const response = await Radicals.find({'_id':{$in:radicalsList}});
+        return res.json(response);
+    } catch (err) {
+        return err;
+    };
+};
 
 const registerRadical = async (req, res) => {
     const {
@@ -58,5 +75,5 @@ const deleteRadical = async (req, res) => {
 }
 
 module.exports = {
-    getRadicalsList, getRadicalByID, registerRadical, updateRadical, deleteRadical,
+    getRadicalsList, getRadicalByID, getRadicalByIDs, registerRadical, updateRadical, deleteRadical,
 };

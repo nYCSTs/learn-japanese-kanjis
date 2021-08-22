@@ -7,13 +7,22 @@ const getShuffledKanjiList = async (req, res) => {
 
 const getKanjiList = async (req, res) => {
     return res.json(await Kanjis.find());
-}
+};
+
+const getKanjiByID = async (req, res) => {
+    const { id } = req.params;
+    try {
+        return res.json(await Kanjis.findOne({ _id: id }));
+    } catch (err) {
+        return err;
+    }
+};
 
 const addKanji = async (req, res) => {
     const {
         kanji, // String
         kanjiMeaning, // Array de strings
-        radicals, // Array de objetos
+        radicals, // Array de strings
         onyomi, // Array de strings
         kunyomi, // Array de objetos
     } = req.body;
@@ -43,19 +52,25 @@ const updateKanji = async (req, res) => {
     const { id } = req.params;
     
     const {
-        kanji, onyomiReading, kunyomiReading, meaning
+        kanji, 
+        kanjiMeaning, 
+        radicals,
+        onyomi,
+        kunyomi,
     } = req.body;
 
-    if (!kanji || !onyomiReading || !kunyomiReading || !meaning) {
+    if (!kanji || !kanjiMeaning || !radicals) {
         return res.json({ "err": "invalid values" });
     }
 
     try {
         const updatedKanji = await Kanjis.findOneAndUpdate({ _id: id }, {
             kanji, 
-            onyomiReading,
-            kunyomiReading,
-            meaning,
+            kanjiMeaning, 
+            radicals,
+            radicalsList,
+            onyomi,
+            kunyomi,
         }, { new: true });
         return res.json(updatedKanji);
     } catch (err) {
@@ -71,8 +86,8 @@ const deleteKanji = async (req, res) => {
     } catch (err) {
         return res.json(err);
     }
-}
+};
 
 module.exports = {
-    getKanjiList, getShuffledKanjiList, addKanji, updateKanji, deleteKanji
+    getKanjiList, getKanjiByID, getShuffledKanjiList, addKanji, updateKanji, deleteKanji
 };

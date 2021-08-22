@@ -12,16 +12,10 @@ const kanjiSchema = new mongoose.Schema({
         type: String,
         require: true,
     }],
-    // Radicais que compõem o kanji
+    // Radicais que compõem o kanji (IDs)
     radicals: [{
-        shape: {
-            type: String,
-            require: true,
-        },
-        meaning: {
-            type: String,
-            require: true
-        },
+        type: String,
+        require: true,
     }],
     // Leituras onyomi
     onyomi: [{
